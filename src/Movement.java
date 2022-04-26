@@ -6,20 +6,32 @@ import java.awt.event.MouseMotionListener;
 public class Movement implements MouseListener, MouseMotionListener {
 
     private final int MAX_CAR_SIZE = 360;
-    private Component[] components;
+    public Component[] components;
     private int x, y;
     private Point previousPoint = new Point();
     private boolean canMove;
 
+    public boolean isWin;
+    private CustomRectangle endingPlace;
+    private  EndLevel endLevel;
 
-    public Movement(Component... components) {
+
+
+
+    public Movement(Component... components)
+    {
+        endLevel=new EndLevel();
+        endingPlace=endLevel.endLevel.getCar();
         canMove = true;
         for (Component jPanel : components) {
             this.components = components;
             jPanel.addMouseListener(this);
             jPanel.addMouseMotionListener(this);
         }
+
+
     }
+
 
     public void mouseDragged(MouseEvent e) {
         final int CORRECTION = 1;
@@ -29,10 +41,12 @@ public class Movement implements MouseListener, MouseMotionListener {
         final int MIN_Y = Board.BOARD_START_Y + Board.LINE_THICKNESS - CORRECTION;
 
 
+        canMove= !e.getComponent().contains(endingPlace.getX(), endingPlace.getY());
+
         if (canMove) {
             if (e.getComponent().getWidth() <= MAX_CAR_SIZE && e.getComponent().getHeight() <= MAX_CAR_SIZE) {
                 //בודק שהמצביע בתוך האובייקט
-                collusion(components, e.getComponent(), previousPoint);
+                collision(components, e.getComponent(), previousPoint);
                 previousPoint = e.getComponent().getLocation();
                 if (e.getComponent().contains(e.getPoint())) {
                     //בודק שלא עבר את מקס X
@@ -61,24 +75,34 @@ public class Movement implements MouseListener, MouseMotionListener {
                     }
                 }
             }
-            collusion(components, e.getComponent(), previousPoint);
+            collision(components, e.getComponent(), previousPoint);
         }
     }
 
 
 
 
-    public boolean collusion(Component[] components, Component component, Point previousPoint) {
+    public boolean collision(Component[] components, Component component, Point previousPoint) {
         boolean collusion = false;
         int counter = 0;
-        for (Component value : components) {
-            if (value.getHeight() <= MAX_CAR_SIZE && value.getWidth() <= MAX_CAR_SIZE) {
+        for (Component value : components)
+        {
+            if (value.getHeight() <= MAX_CAR_SIZE && value.getWidth() <= MAX_CAR_SIZE)
+            {
                 Rectangle valueRect = new Rectangle(value.getX(), value.getY(), value.getWidth(), value.getHeight());
                 Rectangle componentRect = new Rectangle(component.getX(), component.getY(), component.getWidth(), component.getHeight());
 
-                if (componentRect.intersects(valueRect)) {
+                if (componentRect.intersects(valueRect))
+                {
                     counter++;
+                    if (componentRect.contains(endingPlace.getX()-5,endingPlace.getY()+5))
+                    ///  בודק אם הוא מכיל את נקודת הניצחון
+                    {
+                        this.isWin=true;
+                        System.out.println("wining");
+                    }
                 }
+
             }
             if (counter > 1) {
                 collusion = true;

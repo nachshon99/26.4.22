@@ -1,21 +1,25 @@
 import javax.swing.*;
 import java.awt.*;
 
-public class GameScene extends JPanel {
+public class GameScene extends JPanel   {
 
     public static final int SLEEP_TIME = 15000;
 
     private Car[] cars;
-    private Levels levels;
+    public Levels levels;
     private JPanel[] panels;
     private JPanel jPanel;
-    private Movement mv;
+    public Movement mv;
+    public  EndLevel endLevel;
 
 
-    public GameScene() {
+
+
+    public GameScene (){
 
         levels = new Levels();
         cars = levels.getCars();
+        endLevel=new EndLevel();
         mv = new Movement();
         MenuPanel menuPanel = new MenuPanel(0, 0, Main.WINDOW_WIDTH, Main.WINDOW_HEIGHT);
         this.add(menuPanel);
@@ -23,6 +27,8 @@ public class GameScene extends JPanel {
         this.setBounds(0, 0, Main.WINDOW_WIDTH, Main.WINDOW_HEIGHT);
         this.setBackground(Color.white);
         this.setLayout(null);
+
+
 
 
 
@@ -34,24 +40,18 @@ public class GameScene extends JPanel {
         this.add(nextLevelPanel);
 
         //Next Level Panel
-        Thread thread1 = new Thread(() -> {
-            int num = 0;
+        Thread thread1 = new Thread(() ->
+        {
             while (true) {
-                try {
-                    num++;
-                    if(num == 3){
-                        nextLevelPanel.setVisible(true);
-                        mv.setCanMove(false);
-                    }
-                    Thread.sleep(SLEEP_TIME);
+                if(mv.isWin){
 
-
-                } catch (InterruptedException e) {
-                    e.printStackTrace();
+                    nextLevelPanel.setVisible(true);
+                    mv.setCanMove(false);
+                    mv.isWin=false;
                 }
+
             }
-        });
-        thread1.start();
+        });thread1.start();
 
 
         for (int i = 0; i < cars.length; i++) {
@@ -90,6 +90,8 @@ public class GameScene extends JPanel {
         setVisible(true);
 
     }
+
+
 
 
 

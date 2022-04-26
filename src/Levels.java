@@ -4,24 +4,13 @@ public class Levels extends Level{
     public static final int LEVEL_1 = 1;
     public static final int LEVEL_2 = 2;
 
-    private int level;
+    public int level;
 
-    Levels()
+   public Levels()
     {
         endLevel = new Car(END_LEVEL,3,6,Color.BLACK);
         level = LEVEL_1;
-
-
-        switch (level){
-            case LEVEL_1:{
-                level1();
-                break;
-            }
-            case LEVEL_2:{
-                level2();
-                break;
-            }
-        }
+        level1();
     }
     public void level1(){
         xCar = new Car(CX,3,2,Color.red);

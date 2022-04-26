@@ -1,8 +1,15 @@
 import javax.swing.*;
 import java.awt.*;
 
-public class NextLevelPanel extends JPanel {
+public class NextLevelPanel extends JPanel
+{
+    public boolean nextLevel;
+
+
     public NextLevelPanel(Levels level,Movement movement){
+
+
+
         this.setBounds(Main.WINDOW_WIDTH/4,Main.WINDOW_HEIGHT/3,500,250);
         this.setBackground(Color.gray);
         this.setLayout(null);
@@ -16,13 +23,13 @@ public class NextLevelPanel extends JPanel {
 
         JButton nextLevelButton = new JButton("Next");
         nextLevelButton.setBounds(50,150,150,70);
-        nextLevelButton.addActionListener((event) -> {
-            int nextLv = 1 + level.getLevel() ;
+        nextLevelButton.addActionListener((event) ->
+        {
+
+            int nextLv = 1 + level.getLevel();
             level.setLevel(nextLv);
             movement.setCanMove(true);
             this.setVisible(false);
-            GameScene gameScene = new GameScene();
-            this.add(gameScene);
         });
         this.add(nextLevelButton);
 

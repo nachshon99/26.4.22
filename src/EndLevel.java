@@ -2,7 +2,7 @@ import javax.swing.*;
 import java.awt.*;
 
 public class EndLevel extends JPanel {
-    private Car endLevel;
+    public Car endLevel;
     private String cx;
 
     public EndLevel(){
