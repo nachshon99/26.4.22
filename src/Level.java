@@ -22,15 +22,15 @@ public abstract class Level extends JFrame {
     protected Car iCar;
     protected Car jCar;
     protected Car kCar;
-
     protected Car oTruck;
     protected Car pTruck;
     protected Car qTruck;
     protected Car rTruck;
 
-    private Car[] cars;
+    public Car[] cars;
 
-    public Car[] getCars() {
+    public Car[] getCars()
+    {
         return cars;
     }
 

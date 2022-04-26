@@ -16,8 +16,7 @@ public class Car {
 
     private final CustomRectangle car = new CustomRectangle();
 
-    public Car() {
-    }
+
 
     public Car(String carType_xCar_yCar_xTruck_yTruck, int line, int column, Color color) {
         x = FULL_LINE * (column + MAKE_START_FROM_ONE) + Board.BOARD_START_X + CORRECTION;

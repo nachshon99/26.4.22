@@ -6,8 +6,6 @@ public class Main extends JFrame{
     public static final int WINDOW_HEIGHT = 900;
 
     Main() {
-        GameScene gameScene = new GameScene();
-        this.add(gameScene);
         this.setTitle("RUSH HOUR");
         this.setSize(WINDOW_WIDTH, WINDOW_HEIGHT);
         this.setResizable(true);
@@ -15,6 +13,8 @@ public class Main extends JFrame{
         this.setLocationRelativeTo(null);
         this.setResizable(false);
         this.setLayout(null);
+        GameScene gameScene = new GameScene(this,1,false);
+        this.add(gameScene);
         this.setVisible(true);
     }
 

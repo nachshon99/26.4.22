@@ -3,10 +3,13 @@ import java.awt.*;
 
 public class NextLevelPanel extends JPanel
 {
-    public boolean nextLevel;
+    GameScene gameScene;
 
 
-    public NextLevelPanel(Levels level,Movement movement){
+    public NextLevelPanel(Levels level,Movement movement,GameScene gameScene){
+
+
+        this.gameScene=gameScene;
 
 
 
@@ -25,11 +28,8 @@ public class NextLevelPanel extends JPanel
         nextLevelButton.setBounds(50,150,150,70);
         nextLevelButton.addActionListener((event) ->
         {
-
-            int nextLv = 1 + level.getLevel();
-            level.setLevel(nextLv);
-            movement.setCanMove(true);
             this.setVisible(false);
+            gameScene.changeLevel=true;
         });
         this.add(nextLevelButton);
 

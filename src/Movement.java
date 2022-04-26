@@ -10,8 +10,7 @@ public class Movement implements MouseListener, MouseMotionListener {
     private int x, y;
     private Point previousPoint = new Point();
     private boolean canMove;
-
-    public boolean isWin;
+    boolean isWin;
     private CustomRectangle endingPlace;
     private  EndLevel endLevel;
 
@@ -96,10 +95,10 @@ public class Movement implements MouseListener, MouseMotionListener {
                 {
                     counter++;
                     if (componentRect.contains(endingPlace.getX()-5,endingPlace.getY()+5))
-                    ///  בודק אם הוא מכיל את נקודת הניצחון
+                    //  בודק אם הוא מכיל את נקודת הניצחון
                     {
                         this.isWin=true;
-                        System.out.println("wining");
+                        System.out.println("isWin");
                     }
                 }
 
