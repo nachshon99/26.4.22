@@ -46,7 +46,7 @@ public class GameScene extends JPanel implements  Runnable {
 
         this.startMainLoop();
 
-        mv = new Movement(this.getComponents());
+        mv = new Movement(panels);
         this.menuPanel();
 
         menuPanel.setVisible(!isNewLevel);

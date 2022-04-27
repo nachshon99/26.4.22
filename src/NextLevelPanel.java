@@ -35,7 +35,8 @@ public class NextLevelPanel extends JPanel
 
         JButton exitButton = new JButton("Exit");
         exitButton.setBounds(300,150,150,70);
-        exitButton.addActionListener((event) -> {
+        exitButton.addActionListener((event) ->
+        {
             System.exit(0);
         });
         this.add(exitButton);

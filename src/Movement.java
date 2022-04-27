@@ -1,3 +1,4 @@
+import javax.swing.*;
 import java.awt.*;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
@@ -11,18 +12,15 @@ public class Movement implements MouseListener, MouseMotionListener {
     private Point previousPoint = new Point();
     private boolean canMove;
     boolean isWin;
-    private CustomRectangle endingPlace;
-    private  EndLevel endLevel;
-
-
 
 
     public Movement(Component... components)
     {
-        endLevel=new EndLevel();
-        endingPlace=endLevel.endLevel.getCar();
+
+
         canMove = true;
-        for (Component jPanel : components) {
+        for (Component component : components) {
+            JPanel jPanel = (JPanel) component;
             this.components = components;
             jPanel.addMouseListener(this);
             jPanel.addMouseMotionListener(this);
@@ -32,7 +30,10 @@ public class Movement implements MouseListener, MouseMotionListener {
     }
 
 
+
     public void mouseDragged(MouseEvent e) {
+        Rectangle endingPlace = components[components.length - 1].getBounds();// תמיד באינדקס הזה  יהיה הפאנל של הנק סיום
+        Rectangle startingCar = components[0].getBounds();// תמיד באינדקס הזה  יהיה הפאנל של הנק התחלה
         final int CORRECTION = 1;
         final int MAX_X = Board.BOARD_WIDTH_HEIGHT + Board.BOARD_START_X - e.getComponent().getWidth() + CORRECTION;
         final int MAX_Y = Board.BOARD_WIDTH_HEIGHT + Board.BOARD_START_Y - e.getComponent().getHeight() + CORRECTION;
@@ -40,7 +41,7 @@ public class Movement implements MouseListener, MouseMotionListener {
         final int MIN_Y = Board.BOARD_START_Y + Board.LINE_THICKNESS - CORRECTION;
 
 
-        canMove= !e.getComponent().contains(endingPlace.getX(), endingPlace.getY());
+        canMove= !e.getComponent().contains((int) endingPlace.getX(),(int) endingPlace.getY());
 
         if (canMove) {
             if (e.getComponent().getWidth() <= MAX_CAR_SIZE && e.getComponent().getHeight() <= MAX_CAR_SIZE) {
@@ -76,16 +77,26 @@ public class Movement implements MouseListener, MouseMotionListener {
             }
             collision(components, e.getComponent(), previousPoint);
         }
+        if (startingCar.intersects(endingPlace))
+        {
+            isWin=true;
+            System.out.println("winning");
+
+        }
     }
 
 
 
 
-    public boolean collision(Component[] components, Component component, Point previousPoint) {
-        boolean collusion = false;
-        int counter = 0;
-        for (Component value : components)
+
+    public boolean collision(Component[] components, Component component, Point previousPoint)
+    {
+
+        boolean collision = false;
+        int counter=0;
+        for ( int i =0;i<components.length-1;i++)
         {
+            Component value=components[i];
             if (value.getHeight() <= MAX_CAR_SIZE && value.getWidth() <= MAX_CAR_SIZE)
             {
                 Rectangle valueRect = new Rectangle(value.getX(), value.getY(), value.getWidth(), value.getHeight());
@@ -93,22 +104,19 @@ public class Movement implements MouseListener, MouseMotionListener {
 
                 if (componentRect.intersects(valueRect))
                 {
+
                     counter++;
-                    if (componentRect.contains(endingPlace.getX()-5,endingPlace.getY()+5))
-                    //  בודק אם הוא מכיל את נקודת הניצחון
-                    {
-                        this.isWin=true;
-                        System.out.println("isWin");
-                    }
                 }
 
             }
             if (counter > 1) {
-                collusion = true;
+                collision = true;
                 component.setLocation(previousPoint);
             }
         }
-        return collusion;
+
+
+        return collision;
     }
 
     public void mousePressed(MouseEvent e) {

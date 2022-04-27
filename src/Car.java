@@ -38,9 +38,10 @@ public class Car {
             car.setWidth(CAR_Y_WIDTH - CORRECTION);
             car.setHeight(LONG_CAR_Y_HEIGHT - CORRECTION);
         }else if (Objects.equals(carType_xCar_yCar_xTruck_yTruck, "endLevel")) {
-            car.setX(795);
+            car.setX(765);
             car.setWidth(20);
-            car.setHeight(110);
+            car.setHeight(20);
+            car.setColor(Color.black);
         }
     }
 
